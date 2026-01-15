@@ -1,17 +1,18 @@
 #!/bin/bash
 
 # Script to extract Starlink-related ASN entries from git history
-# Usage: ./extract_starlink_history.sh <output_file_path>
+# Usage: ./extract_starlink_history.sh
+# RUN FROM INSIDE as-metadata
 
-if [ "$#" -ne 1 ]; then
-	echo "Usage: $0 <output_file_path>"
-	echo "Error: One argument required, got $#"
+if [ "$#" -ne 0 ]; then
+	echo "Usage: $0"
+	echo "Error: No argument required, got $#"
 	exit 1
 fi
 
-OUTPUT_FILE="$1$(date +%Y%m%d_%H%M%S)_starlink_ASNs.csv"
-TEMP_FILE="$1temp_as.csv"
-SEEN_ASNS="$1seen_asns.txt"
+OUTPUT_FILE="../data/starlink_ASNs/$(date +%Y%m%d_%H%M%S).csv"
+TEMP_FILE="temp_as.csv"
+SEEN_ASNS="seen_asns.txt"
 
 > "$OUTPUT_FILE"
 > "$SEEN_ASNS"
@@ -22,6 +23,7 @@ commits=$(git log --all --oneline --grep="^Update [0-9]\{8\}-[0-9]\{4\}$" --pret
 
 if [ -z "$commits" ]; then
     echo "No commits found matching the pattern"
+    rm -f "$TEMP_FILE" "$SEEN_ASNS"
     exit 1
 fi
 
