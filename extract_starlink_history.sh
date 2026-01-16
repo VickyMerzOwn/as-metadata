@@ -64,3 +64,8 @@ rm -f "$TEMP_FILE" "$SEEN_ASNS"
 
 echo "Done! Results saved to $OUTPUT_FILE"
 echo "Total unique ASNs found: $(wc -l < "$OUTPUT_FILE")"
+
+# update the symlink; compute diff to a file;
+
+ln -sf ../data/starlink_ASNs/$(ls -t ../data/starlink_ASNs/ | head -n1) test_starlink_ASNs
+diff test_starlink_ASNs ../data/starlink_ASNs/$(ls -t ../data/starlink_ASNs/ | head -n2 | tail -n1) > starlink_ASNs_diff.txt
