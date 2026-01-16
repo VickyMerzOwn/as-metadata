@@ -19,7 +19,7 @@ SEEN_ASNS="seen_asns.txt"
 
 echo "Searching for commits with 'Update YYYYMMDD-HHMM' pattern..."
 
-commits=$(git log --all --oneline --grep="^Update [0-9]\{8\}-[0-9]\{4\}$" --pretty=format:"%H %s" | tail -r)
+commits=$(git log --all --oneline --grep="^Update [0-9]\{8\}-[0-9]\{4\}$" --pretty=format:"%H %s" | tac)
 
 if [ -z "$commits" ]; then
     echo "No commits found matching the pattern"
